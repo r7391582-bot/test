@@ -3,21 +3,276 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的個人網站</title>
+    <title>Personal Profile</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding-top: 50px;
-            background-color: #f4f4f9;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
         }
-        h1 {
-            color: #333;
+
+        body {
+            background-color: #0b0a10;
+            color: #f5f5f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+            overflow-x: hidden;
+        }
+
+        .ambient-glow {
+            position: fixed;
+            width: 650px;
+            height: 650px;
+            background: radial-gradient(circle, rgba(186, 164, 238, 0.15) 0%, rgba(138, 110, 210, 0.05) 45%, rgba(0, 0, 0, 0) 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .apple-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 520px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .brand-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: rgba(216, 201, 250, 0.08);
+            border: 1px solid rgba(216, 201, 250, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(138, 110, 210, 0.15);
+            margin-bottom: 8px;
+        }
+
+        .brand-icon svg {
+            width: 22px;
+            height: 22px;
+            fill: #e0d5f8;
+            opacity: 0.95;
+        }
+
+        .apple-card {
+            width: 100%;
+            background: rgba(28, 26, 35, 0.55);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(216, 201, 250, 0.18);
+            border-radius: 28px;
+            padding: 32px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 40px rgba(186, 164, 238, 0.05);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .apple-card:hover {
+            border-color: rgba(216, 201, 250, 0.35);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 50px rgba(186, 164, 238, 0.1);
+        }
+
+        .section-block {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .card-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #b3a5d3;
+        }
+
+        .card-text {
+            font-size: 17px;
+            line-height: 1.5;
+            font-weight: 400;
+            letter-spacing: -0.3px;
+            color: #f5f5f7;
+        }
+
+        .divider {
+            height: 1px;
+            background: rgba(216, 201, 250, 0.1);
+            margin: 24px 0;
+        }
+
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: relative;
+            padding-left: 16px;
+            border-left: 1px solid rgba(216, 201, 250, 0.18);
+            margin-top: 8px;
+        }
+
+        .timeline-item {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -21px;
+            top: 6px;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background-color: #83789c;
+            border: 2px solid #1c1a23;
+        }
+
+        .timeline-item.latest::before {
+            background-color: #d8c9fa;
+            box-shadow: 0 0 10px rgba(216, 201, 250, 0.8);
+        }
+
+        .timeline-date {
+            font-size: 12px;
+            color: #b3a5d3;
+            font-weight: 500;
+        }
+
+        .timeline-content {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #e6e1f3;
+        }
+
+        .tag-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag-pill {
+            background: rgba(216, 201, 250, 0.08);
+            border: 1px solid rgba(216, 201, 250, 0.15);
+            padding: 8px 14px;
+            border-radius: 980px;
+            font-size: 13px;
+            color: #e6e1f3;
+            transition: background 0.2s;
+        }
+
+        .tag-pill:hover {
+            background: rgba(216, 201, 250, 0.15);
+        }
+
+        .side-note {
+            font-size: 12px;
+            color: #9f91bf;
+            letter-spacing: 0.3px;
+            font-style: italic;
+            opacity: 0.85;
+            margin-top: 4px;
+        }
+
+        .status-footer {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: #b3a5d3;
+            margin-top: 4px;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #c4b0f7;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #c4b0f7;
         }
     </style>
 </head>
 <body>
-    <h1>Hello World! 我的網站成功上線了！</h1>
-    <p>這是我用 GitHub Pages 製作的第一個網頁。</p>
+
+<div class="ambient-glow"></div>
+
+<div class="apple-container">
+    <div class="brand-icon">
+        <svg viewBox="0 0 24 24">
+            <path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 21l3.54-.62C9.37 20.73 10.64 21 12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 16.5c-1.26 0-2.45-.31-3.5-.86l-.25-.13-2.1.37.37-2.06-.15-.26C5.81 15.51 5.5 13.81 5.5 12c0-3.58 2.92-6.5 6.5-6.5s6.5 2.92 6.5 6.5-2.92 6.5-6.5 6.5z"/>
+        </svg>
+    </div>
+
+    <div class="apple-card">
+        <!-- Quotes -->
+        <div class="section-block">
+            <div class="card-label">Instagram</div>
+            <p class="card-text">「心動不一定會留下，但安心會。」</p>
+        </div>
+        
+        <div class="divider"></div>
+        
+        <div class="section-block">
+            <div class="card-label">Threads</div>
+            <p class="card-text">「如果我願意跟著你，那我很喜歡你。」</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Timeline -->
+        <div class="section-block">
+            <div class="card-label" style="margin-bottom: 12px;">Timeline</div>
+            <div class="timeline">
+                <div class="timeline-item latest">
+                    <div class="timeline-date">2026.09.01 — 週一逃避上班</div>
+                    <div class="timeline-content">
+                        週一症候群已經夠想請假，路上又遇到點小 trouble，直接宣布必須請。順便加了朋友 Teams，半夜還捨不得睡搞一下這個自我介紹網頁。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Mindset & Life -->
+        <div class="section-block">
+            <div class="card-label" style="margin-bottom: 12px;">Mindset & Life</div>
+            <div class="tag-grid">
+                <div class="tag-pill">🧠 INTJ Strategy</div>
+                <div class="tag-pill">🌱 Pikmin Walker</div>
+                <div class="tag-pill">💻 Mac & Tech</div>
+                <div class="tag-pill">☕️ Iced Latte</div>
+                <div class="tag-pill">🇹🇭 Thai Drama</div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Small Note -->
+        <div class="side-note">
+            * 不定期看心情更新開發 ☕️
+        </div>
+    </div>
+
+    <div class="status-footer">
+        <div class="status-dot"></div>
+        <span>Exploring life & code</span>
+    </div>
+</div>
+
 </body>
 </html>
