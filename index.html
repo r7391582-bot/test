@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
     <title>Personal Profile</title>
+
     <style>
         * {
             margin: 0;
@@ -11,15 +13,20 @@
             box-sizing: border-box;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        html {
+            width: 100%;
+            min-height: 100%;
+            overflow-x: hidden;
         }
 
         body {
             background-color: #0b0a10;
             color: #f5f5f7;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            width: 100%;
             min-height: 100vh;
             padding: 40px 20px;
             overflow-x: hidden;
@@ -29,7 +36,12 @@
             position: fixed;
             width: 650px;
             height: 650px;
-            background: radial-gradient(circle, rgba(186, 164, 238, 0.15) 0%, rgba(138, 110, 210, 0.05) 45%, rgba(0, 0, 0, 0) 70%);
+            background: radial-gradient(
+                circle,
+                rgba(186, 164, 238, 0.15) 0%,
+                rgba(138, 110, 210, 0.05) 45%,
+                rgba(0, 0, 0, 0) 70%
+            );
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -42,6 +54,7 @@
             z-index: 1;
             width: 100%;
             max-width: 520px;
+            margin: 0 auto;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -51,6 +64,7 @@
         .brand-icon {
             width: 52px;
             height: 52px;
+            flex-shrink: 0;
             border-radius: 50%;
             background: rgba(216, 201, 250, 0.08);
             border: 1px solid rgba(216, 201, 250, 0.25);
@@ -70,25 +84,35 @@
 
         .apple-card {
             width: 100%;
+            min-width: 0;
+            overflow: hidden;
             background: rgba(28, 26, 35, 0.55);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border: 1px solid rgba(216, 201, 250, 0.18);
             border-radius: 28px;
             padding: 32px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 40px rgba(186, 164, 238, 0.05);
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.7),
+                0 0 40px rgba(186, 164, 238, 0.05);
+            transition:
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
         }
 
         .apple-card:hover {
             border-color: rgba(216, 201, 250, 0.35);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 50px rgba(186, 164, 238, 0.1);
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.7),
+                0 0 50px rgba(186, 164, 238, 0.1);
         }
 
         .section-block {
             display: flex;
             flex-direction: column;
             gap: 8px;
+            min-width: 0;
+            width: 100%;
         }
 
         .card-label {
@@ -100,31 +124,42 @@
         }
 
         .card-text {
+            width: 100%;
             font-size: 17px;
             line-height: 1.5;
             font-weight: 400;
             letter-spacing: -0.3px;
             color: #f5f5f7;
+            overflow-wrap: anywhere;
+            word-break: normal;
         }
 
         .divider {
+            width: 100%;
             height: 1px;
             background: rgba(216, 201, 250, 0.1);
             margin: 24px 0;
         }
 
+        /* =========================
+           Timeline
+        ========================= */
+
         .timeline {
+            width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 24px;
             position: relative;
-            padding-left: 16px;
-            border-left: 1px solid rgba(216, 201, 250, 0.18);
+            padding-left: 20px;
             margin-top: 8px;
+            border-left: 1px solid rgba(216, 201, 250, 0.18);
         }
 
         .timeline-item {
             position: relative;
+            width: 100%;
+            min-width: 0;
             display: flex;
             flex-direction: column;
             gap: 4px;
@@ -133,13 +168,14 @@
         .timeline-item::before {
             content: '';
             position: absolute;
-            left: -21px;
-            top: 6px;
+            left: -25px;
+            top: 5px;
             width: 9px;
             height: 9px;
             border-radius: 50%;
             background-color: #83789c;
             border: 2px solid #1c1a23;
+            box-sizing: content-box;
         }
 
         .timeline-item.latest::before {
@@ -148,24 +184,38 @@
         }
 
         .timeline-date {
+            width: 100%;
             font-size: 12px;
+            line-height: 1.5;
             color: #b3a5d3;
             font-weight: 500;
+            overflow-wrap: anywhere;
         }
 
         .timeline-content {
+            width: 100%;
+            max-width: 100%;
             font-size: 14px;
-            line-height: 1.6;
+            line-height: 1.65;
             color: #e6e1f3;
+            overflow-wrap: anywhere;
+            word-break: normal;
         }
+
+        /* =========================
+           Tags
+        ========================= */
 
         .tag-grid {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
+            width: 100%;
+            min-width: 0;
         }
 
         .tag-pill {
+            max-width: 100%;
             background: rgba(216, 201, 250, 0.08);
             border: 1px solid rgba(216, 201, 250, 0.15);
             padding: 8px 14px;
@@ -173,19 +223,26 @@
             font-size: 13px;
             color: #e6e1f3;
             transition: background 0.2s;
+            white-space: nowrap;
         }
 
         .tag-pill:hover {
             background: rgba(216, 201, 250, 0.15);
         }
 
+        /* =========================
+           Footer
+        ========================= */
+
         .side-note {
+            width: 100%;
             font-size: 12px;
             color: #9f91bf;
             letter-spacing: 0.3px;
             font-style: italic;
             opacity: 0.85;
             margin-top: 4px;
+            overflow-wrap: anywhere;
         }
 
         .status-footer {
@@ -200,17 +257,129 @@
         .status-dot {
             width: 6px;
             height: 6px;
+            flex-shrink: 0;
             background-color: #c4b0f7;
             border-radius: 50%;
             box-shadow: 0 0 8px #c4b0f7;
         }
+
+        /* =========================
+           Mobile
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 24px 12px;
+            }
+
+            .apple-container {
+                width: 100%;
+                max-width: 520px;
+                gap: 16px;
+            }
+
+            .brand-icon {
+                width: 48px;
+                height: 48px;
+                margin-bottom: 4px;
+            }
+
+            .brand-icon svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            .apple-card {
+                width: 100%;
+                padding: 24px 20px;
+                border-radius: 24px;
+            }
+
+            .card-text {
+                font-size: 16px;
+                line-height: 1.55;
+            }
+
+            .timeline {
+                padding-left: 17px;
+                gap: 22px;
+            }
+
+            .timeline-item::before {
+                left: -22px;
+            }
+
+            .timeline-content {
+                font-size: 14px;
+                line-height: 1.65;
+            }
+
+            .timeline-date {
+                font-size: 11px;
+            }
+
+            .divider {
+                margin: 22px 0;
+            }
+
+            .tag-grid {
+                gap: 8px;
+            }
+
+            .tag-pill {
+                font-size: 12px;
+                padding: 7px 12px;
+            }
+
+            .ambient-glow {
+                width: 450px;
+                height: 450px;
+            }
+        }
+
+        /* =========================
+           Very Small Phones
+        ========================= */
+
+        @media (max-width: 380px) {
+
+            body {
+                padding: 20px 8px;
+            }
+
+            .apple-card {
+                padding: 22px 16px;
+                border-radius: 22px;
+            }
+
+            .timeline {
+                padding-left: 16px;
+            }
+
+            .timeline-item::before {
+                left: -21px;
+            }
+
+            .timeline-content {
+                font-size: 13.5px;
+            }
+
+            .tag-pill {
+                font-size: 11.5px;
+                padding: 7px 10px;
+            }
+        }
     </style>
 </head>
+
 <body>
 
 <div class="ambient-glow"></div>
 
 <div class="apple-container">
+
+    <!-- Brand Icon -->
     <div class="brand-icon">
         <svg viewBox="0 0 24 24">
             <path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 21l3.54-.62C9.37 20.73 10.64 21 12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 16.5c-1.26 0-2.45-.31-3.5-.86l-.25-.13-2.1.37.37-2.06-.15-.26C5.81 15.51 5.5 13.81 5.5 12c0-3.58 2.92-6.5 6.5-6.5s6.5 2.92 6.5 6.5-2.92 6.5-6.5 6.5z"/>
@@ -221,116 +390,207 @@
 
         <!-- Quotes -->
         <div class="section-block">
-            <div class="card-label">Instagram</div>
-            <p class="card-text">「心動不一定會留下，但安心會。」</p>
-            <p class="card-text" style="margin-top: 6px; font-size: 15px; color: #b3a5d3;">「掉進資本主義無底洞。」</p>
-        </div>
-        
-        <div class="divider"></div>
-        
-        <div class="section-block">
-            <div class="card-label">Threads</div>
-            <p class="card-text">「如果我願意跟著你，那我很喜歡你。」</p>
+
+            <div class="card-label">情緒</div>
+
+            <p class="card-text">
+                「心動不一定會留下，但安心會。」
+            </p>
+
+            <p class="card-text"
+               style="margin-top: 6px; font-size: 15px; color: #b3a5d3;">
+                「掉進資本主義無底洞。」
+            </p>
+
         </div>
 
         <div class="divider"></div>
+
+        <div class="section-block">
+
+            <div class="card-label">念頭</div>
+
+            <p class="card-text">
+                「如果我願意跟著你，那我很喜歡你。」
+            </p>
+
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-block">
+
+            <div class="card-label">現實</div>
+
+            <p class="card-text">
+                「一次外向，換來無數次內向。」
+            </p>
+
+        </div>
+
+        <div class="divider"></div>
+
 
         <!-- Timeline -->
         <div class="section-block">
-            <div class="card-label" style="margin-bottom: 12px;">Timeline</div>
+
+            <div class="card-label" style="margin-bottom: 12px;">
+                Timeline
+            </div>
 
             <div class="timeline">
 
                 <!-- 2026.09.21 -->
                 <div class="timeline-item latest">
-                    <div class="timeline-date">2026.09.21 — 今日暫停營業</div>
+
+                    <div class="timeline-date">
+                        2026.09.21 — 今日暫停營業
+                    </div>
+
                     <div class="timeline-content">
                         這週明明只要上四天，
                         <br>
                         還是成功請掉了一天。
                         <br><br>
-                        身理內部會議，
+
+                        身體裡的某個部門，
+                        <br>
+                        今天好像有點意見。
                         <br>
                         情緒也順便一起罷工了。
                         <br><br>
-                        購物車清單，增加中。
+
+                        最近倒是有在看《謀殺的滋味》，
+                        <br>
+                        比起上班，還是劇比較有意思。🎬
+                        <br><br>
+
+                        好吧。
+                        <br>
+                        今天就先不營業。🌙
                     </div>
+
                 </div>
+
 
                 <!-- 社群清潔 -->
                 <div class="timeline-item">
-                    <div class="timeline-date">2026.09.21 — 社群重新整理</div>
+
+                    <div class="timeline-date">
+                        2026.09.21 — 社群重新整理
+                    </div>
+
                     <div class="timeline-content">
                         上週順手做了一次社群清潔。
                         <br><br>
+
                         清除倒是很順利，
                         <br>
                         有些門，暫時還沒開。🙂
+                        <br>
+                        一次外向，
+                        <br>
+                        換來無數次內向。
                         <br><br>
+
                         只好順便研究了一些新的地方，
                         <br>
                         Reddit 嘗試中。👀
                         <br><br>
+
                         還有跟老朋友見面，
                         <br>
                         好玩。
                         <br><br>
+
                         謀殺的滋味，還是很有趣。🎬
-                        <br>
                     </div>
+
                 </div>
+
 
                 <!-- 2026.09.10 -->
                 <div class="timeline-item">
-                    <div class="timeline-date">2026.09.10 — Apple Event 🍎</div>
+
+                    <div class="timeline-date">
+                        2026.09.10 — Apple Event 🍎
+                    </div>
+
                     <div class="timeline-content">
                         凌晨 01:00，Apple Event。
                         <br><br>
+
                         新 CEO 上任後的第一場 9 月發表會，
                         <br>
                         覺得有點酷，所以還是看了。🍎
                     </div>
+
                 </div>
+
 
                 <!-- 2026.09.07 -->
                 <div class="timeline-item">
-                    <div class="timeline-date">2026.09.07 — 偷偷離開日常</div>
+
+                    <div class="timeline-date">
+                        2026.09.07 — 偷偷離開日常
+                    </div>
+
                     <div class="timeline-content">
                         偷偷留了一天給自己。
                         <br><br>
+
                         爬山、整理一些東西，<br>
                         跟朋友聊聊天。
                         <br><br>
+
                         剛好朋友今天也準備出發，<br>
                         只是晚了一點點。✈️
                         <br><br>
+
                         今天的步調，剛剛好。🌿
                     </div>
+
                 </div>
+
 
                 <!-- 2026.08.31 -->
                 <div class="timeline-item">
-                    <div class="timeline-date">2026.08.31 — 週一逃避上班</div>
+
+                    <div class="timeline-date">
+                        2026.08.31 — 週一逃避上班
+                    </div>
+
                     <div class="timeline-content">
                         週一想請假，路上再遇到一點 trouble，<br>
                         很好，請假理由湊齊。
                         <br><br>
+
                         順手加了朋友的 Teams，<br>
                         結果半夜不睡覺，開始用自介網頁。
                         <br><br>
+
                         白天不想上班，晚上捨不得睡。😍
                     </div>
+
                 </div>
 
             </div>
+
         </div>
+
 
         <div class="divider"></div>
 
+
         <!-- Mindset & Life -->
         <div class="section-block">
-            <div class="card-label" style="margin-bottom: 12px;">Mindset & Life</div>
+
+            <div class="card-label" style="margin-bottom: 12px;">
+                Mindset & Life
+            </div>
+
             <div class="tag-grid">
+
                 <div class="tag-pill">🧠 INTJ Strategy</div>
                 <div class="tag-pill">🌱 Pikmin Walker</div>
                 <div class="tag-pill">💻 Mac & Tech</div>
@@ -339,10 +599,14 @@
                 <div class="tag-pill">🔎 Mystery</div>
                 <div class="tag-pill">🍿 謀殺的滋味</div>
                 <div class="tag-pill">📺 催中</div>
+
             </div>
+
         </div>
 
+
         <div class="divider"></div>
+
 
         <!-- Small Note -->
         <div class="side-note">
@@ -351,10 +615,18 @@
 
     </div>
 
+
+    <!-- Footer -->
     <div class="status-footer">
+
         <div class="status-dot"></div>
-        <span>Exploring life & code</span>
+
+        <span>
+            Exploring life & code
+        </span>
+
     </div>
+
 </div>
 
 </body>
